@@ -37,18 +37,18 @@ while opcion == 'S':
             print("Ejemplo: x**3-2*x-5")
             ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
             graficar(ecuacion)
-            x0 = int(input("Introduzca el punto inicial:\n"))  # Initial guess
+            x0 = int(input("Introduzca el punto inicial:\n"))  # Valor del punto inicial
             derivada = ecuacion.diff(x)
-            # Newton-Raphson Algorithm
-            max_iter = 30  # Max iterations
-            tol = 1  # Tolerance
-            i = 0  # Iteration counter
+            # Inicio del Algoritmo Newton Raphson
+            max_iter = 30  # Iteracion maxima
+            tol = 1  # Minimo de error aceptado
+            i = 0  # Contador de la iteracion
             xi_1 = x0
 
             valores = []
 
             while True:
-                  xi = xi_1-calcular(ecuacion,xi_1)/calcular(derivada,xi_1)  # Newton-Raphson equation
+                  xi = xi_1-calcular(ecuacion,xi_1)/calcular(derivada,xi_1)  # Ecuacion de Newton-Raphson 
                   valores.append([xi,calcular(ecuacion,xi)])
                   xi_1 = xi
                   if i>=1:

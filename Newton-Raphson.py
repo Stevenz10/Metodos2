@@ -41,7 +41,7 @@ while opcion == 'S':
             derivada = ecuacion.diff(x)
             # Newton-Raphson Algorithm
             max_iter = 30  # Max iterations
-            tol = 1  # Tolerance
+            tol = 1  # Tolerance    
             i = 0  # Iteration counter
             xi_1 = x0
 

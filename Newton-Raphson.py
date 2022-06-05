@@ -1,7 +1,11 @@
+from xml.etree.ElementTree import TreeBuilder
 import numpy as np
 import matplotlib.pyplot as plt
 from sympy import sympify, Symbol
 from sympy.parsing.sympy_parser import parse_expr
+from tkinter import messagebox
+from tkinter import font
+
 
 def calcular(ecuacion,valor):
       x = Symbol('x')
@@ -28,29 +32,40 @@ def graficar(ecuacion):
 opcion = 'S'
 
 while opcion == 'S':
-      x = Symbol('x')
-      print("Ejemplo: x**3-2*x-5")
-      ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
-      derivada = ecuacion.diff(x)
-      # Newton-Raphson Algorithm
-      max_iter = 20  # Max iterations
-      tol = 1  # Tolerance
-      i = 0  # Iteration counter
-      x0 = 1  # Initial guess
-      xi_1 = x0
+      try:
+            x = Symbol('x')
+            print("Ejemplo: x**3-2*x-5")
+            ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
+            graficar(ecuacion)
+            x0 = int(input("Introduzca el punto inicial:\n"))  # Initial guess
+            derivada = ecuacion.diff(x)
+            # Newton-Raphson Algorithm
+            max_iter = 30  # Max iterations
+            tol = 1  # Tolerance
+            i = 0  # Iteration counter
+            xi_1 = x0
 
-      valores = []
+            valores = []
 
-      print('Iteration ' + str(i) + ': x = ' + str(x0) + ', f(x) = ' + str(calcular(ecuacion,x0)))
-      # Iterating until either the tolerance or max iterations is met
-      while abs(calcular(ecuacion,xi_1)) > tol or i > max_iter:
-            i = i + 1
-            xi = xi_1-calcular(ecuacion,xi_1)/calcular(derivada,xi_1)  # Newton-Raphson equation
-            valores.append([xi,calcular(ecuacion,xi)])
-            xi_1 = xi
+            while True:
+                  xi = xi_1-calcular(ecuacion,xi_1)/calcular(derivada,xi_1)  # Newton-Raphson equation
+                  valores.append([xi,calcular(ecuacion,xi)])
+                  xi_1 = xi
+                  if i>1:
+                        if abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100) < tol or i > max_iter:
+                              break
+                  i = i + 1
+            for i,valor in enumerate(valores):
+                  if i<1:
+                        print('Iteration ' + str(i) + ': x = ' + str(valor[0]))
+                  else:
+                        print('Iteration ' + str(i) + ': x = ' + str(valor[0]) + ', error = ' +  str(abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100))+"%")
+                  if i>30:
+                        print('Hemos llegado a la iteracion maxima tolerada ' + str(i))
+            opcion = input("Desea continuar S/N:  ").upper()
+      except (SyntaxError,ValueError,TypeError):
+            print("\n********************\nHa introducido un valor incorrecto\n********************\n")
+      except :
+            print("\n********************\nHa ocurrido un error inesperado\n********************\n")
 
-      for i,valor in enumerate(valores):
-            print('Iteration ' + str(i) + ': x = ' + str(valor[0]) + ', f(x) = ' +    str(valor[1]))
-      graficar(ecuacion)
-      opcion = input("Desea continuar S/N:  ").upper()
-      
+print("\n********************\nCerrando programa\n********************\n")

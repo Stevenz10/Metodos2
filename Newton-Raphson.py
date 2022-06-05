@@ -1,10 +1,8 @@
-from xml.etree.ElementTree import TreeBuilder
 import numpy as np
 import matplotlib.pyplot as plt
 from sympy import sympify, Symbol
 from sympy.parsing.sympy_parser import parse_expr
-from tkinter import messagebox
-from tkinter import font
+
 
 
 def calcular(ecuacion,valor):
@@ -22,6 +20,8 @@ def graficar(ecuacion):
       ax.spines['bottom'].set_position('zero')
       ax.spines['left'].set_position('zero')
       ax.spines['right'].set_color('none')      
+      plt.title("Gráfica de " + str(ecuacion))
+      plt.ylim(-10,10)
       plt.plot(valoresX,valoresY)
       plt.show()
       return None
@@ -51,7 +51,7 @@ while opcion == 'S':
                   xi = xi_1-calcular(ecuacion,xi_1)/calcular(derivada,xi_1)  # Newton-Raphson equation
                   valores.append([xi,calcular(ecuacion,xi)])
                   xi_1 = xi
-                  if i>1:
+                  if i>=1:
                         if abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100) < tol or i > max_iter:
                               break
                   i = i + 1

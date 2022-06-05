@@ -1,46 +1,55 @@
-# Defining Function
+import matplotlib.pyplot as plt
+from numpy import linspace
+
+# Definiendo función
 def f(x):
     return -0.5*x**2+2.5*x+4.5
 
 # Implementing Regula Falsi Method
-def Regula_Falsi(x0,x1,e):
+def Regula_Falsi(Xa,Xb,e):
     step = 1
     print('\n\n*** IMPLEMENTACIÓN DEL MÉTODO DE REGULA-FALSI ***')
     condition = True
     while condition:
-        x2 = x0- (x1-x0) * f(x0)/( f(x1) - f(x0) )
-        print('Iteration-%d, x2 = %0.6f and f(x2) = %0.6f' % (step, x2, f(x2)))
+        Xr = Xa- (Xb-Xa) * f(Xa)/( f(Xb) - f(Xa) )
+        print('Iteración%d, Xr = %0.6f y f(Xr) = %0.6f' % (step, Xr, f(Xr)))
 
-        if f(x0) * f(x2) < 0:
-            x1 = x2
+        if f(Xa) * f(Xr) < 0:
+            Xb = Xr
         else:
-            x0 = x2
+            Xa = Xr
 
         step = step + 1
-        condition = abs(f(x2)) > e
+        condition = abs(f(Xr)) > e
 
-    print('\nRequired root is: %0.8f' % x2)
+    print('\nLa raíz requerida es: %0.8f' % Xr)
 
 
-# Input Section
-x0 = input('First Guess: ')
-x1 = input('Second Guess: ')
-e = input('Tolerable Error: ')
+# Sección de Entrada
+Xa = input('Introduzca el primer número: ')
+Xb = input('Introduzca el segundo número: ')
+e = input('Introduzca el minímo error tolerable: ')
 
-# Converting input to float
-x0 = float(x0)
-x1 = float(x1)
+#Convertir las entradas en float
+Xa = float(Xa)
+Xb = float(Xb)
 e = float(e)
 
-#Note: You can combine above two section like this
-# x0 = float(input('First Guess: '))
-# x1 = float(input('Second Guess: '))
-# e = float(input('Tolerable Error: '))
-
-
-# Checking Correctness of initial guess values and false positioning
-if f(x0) * f(x1) > 0.0:
-    print('Given guess values do not bracket the root.')
-    print('Try Again with different guess values.')
+#Revisando que los valores cumplan la teoria de Regula Falsi
+if f(Xa) * f(Xb) > 0.0:
+    print('Los valores ingresados no cumplen con las reglas de Regula Falsi.')
+    print('Porfavor, vuelva a intentarlo de nuevo.')
 else:
-    Regula_Falsi(x0,x1,e)
+    Regula_Falsi(Xa,Xb,e)
+
+#Gráfica de Regula Falsi
+x = linspace(-3,8,100)
+ax = plt.gca()
+ax.spines['top'].set_color('none')
+ax.spines['bottom'].set_position('zero')
+ax.spines['left'].set_position('zero')
+ax.spines['right'].set_color('none')      
+plt.plot(x,f(x))
+plt.title("Gráfica de -0.5*x**2+2.5*x+4.5")
+plt.grid(True)
+plt.show()

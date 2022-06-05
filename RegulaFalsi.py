@@ -22,46 +22,44 @@ def graficar(ecuacion):
       plt.plot(valoresX,valoresY)
       plt.show()
       return None
-  
-opcion = 'Y'
 
-while opcion == 'Y':
-      try:
-            x = Symbol('x')
-            print("Ejemplo: -0.5*x**2+2.5*x+4.5")
-            ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
-            graficar(ecuacion)
-            Xa = int(input("Introduzca el primer punto inicial:\n"))  #First guess
-            Xb = int(input("Introduzca el segundo punto inicial:\n")) #Second guess
-            #Algorithmo de Regula Falsi
-            max_iter = 30  # Max iterations
-            tol = 1  # Tolerance    
-            i = 0  # Iteration counter
-            xi_1 = Xa
-            xi_2 = Xb
-            
-            valores = []
-            
-            while True:
-                xi = xi_2 - (((calcular(ecuacion, xi_2)(xi_1 - xi_2)))/(calcular(ecuacion, xi_1)-calcular(ecuacion, xi_2)))
-                valores.append([xi,calcular(ecuacion,xi)])
-                  xi_1 = xi
-                  xi_2 = xi
-                  if i>=1:
-                        if abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100) < tol or i > max_iter:
-                              break
-                  i = i + 1
-            for i,valor in enumerate(valores):
-                  if i<1:
-                        print('Iteration ' + str(i) + ': x = ' + str(valor[0]))
-                  else:
-                        print('Iteration ' + str(i) + ': x = ' + str(valor[0]) + ', error = ' +  str(abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100))+"%")
-                  if i>30:
-                        print('Hemos llegado a la iteracion maxima tolerada ' + str(i))
-            opcion = input("Desea continuar S/N:  ").upper()
-      except (SyntaxError,ValueError,TypeError):
-            print("\n********************\nHa introducido un valor incorrecto\n********************\n")
-      except :
-            print("\n********************\nHa ocurrido un error inesperado\n********************\n")
+# Implementing Regula Falsi Method
+def Regula_Falsi(Xa,Xb,e):
+    step = 1
+    print('\n\n*** IMPLEMENTACIÓN DEL MÉTODO DE REGULA-FALSI ***')
+    condition = True
+    while condition:
+        Xr = Xa- (Xb-Xa) * calcular(Xa)/( calcular(Xb) - calcular(Xa) )
+        print('Iteración%d, Xr = %0.6f y f(Xr) = %0.6f' % (step, Xr, calcular(Xr)))
 
-print("\n********************\nCerrando programa\n********************\n")
+        if calcular(Xa) * calcular(Xr) < 0:
+            Xb = Xr
+        else:
+            Xa = Xr
+
+        step = step + 1
+        condition = abs(calcular(Xr)) > e
+
+    print('\nLa raíz requerida es: %0.8f' % Xr)
+
+
+# Sección de Entrada
+x = Symbol('x')
+print("Ejemplo: -0.5*x**2+2.5*x+4.5")
+ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
+graficar(ecuacion)
+Xa = input('Introduzca el primer número: ')
+Xb = input('Introduzca el segundo número: ')
+e = input('Introduzca el minímo error tolerable: ')
+
+#Convertir las entradas en float
+Xa = float(Xa)
+Xb = float(Xb)
+e = float(e)
+
+#Revisando que los valores cumplan la teoria de Regula Falsi
+if calcular(Xa) * calcular(Xb) > 0.0:
+    print('Los valores ingresados no cumplen con las reglas de Regula Falsi.')
+    print('Porfavor, vuelva a intentarlo de nuevo.')
+else:
+    Regula_Falsi(Xa,Xb,e)

@@ -1,3 +1,7 @@
+#PROYECTO N2 [06/06/2022]
+#INTEGRANTES: HILENE AYALA [8-975-82]
+#             STEVEN ZHENG [3-749-661]
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sympy import sympify, Symbol
@@ -41,7 +45,7 @@ while opcion == 'S':
             tol = float(input('Introduzca el minímo error tolerable: '))
             derivada = ecuacion.diff(x)
             # Inicio del Algoritmo Newton Raphson
-            max_iter = 30  # Iteracion maxima
+            max_iter = 20  # Iteracion maxima
             i = 0  # Contador de la iteracion
             xi_1 = x0
 

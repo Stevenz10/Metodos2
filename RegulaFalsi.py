@@ -1,3 +1,7 @@
+#PROYECTO N2 [06/06/2022]
+#INTEGRANTES: HILENE AYALA [8-975-82]
+#             STEVEN ZHENG [3-749-661]
+
 from wsgiref.validate import validator
 import numpy as np
 import matplotlib.pyplot as plt

@@ -39,17 +39,10 @@ while opcion == 'S':
             graficar(ecuacion)
             x0 = int(input("Introduzca el punto inicial:\n"))  # Valor del punto inicial
             derivada = ecuacion.diff(x)
-<<<<<<< HEAD
-            # Newton-Raphson Algorithm
-            max_iter = 30  # Max iterations
-            tol = 1  # Tolerance    
-            i = 0  # Iteration counter
-=======
             # Inicio del Algoritmo Newton Raphson
             max_iter = 30  # Iteracion maxima
             tol = 1  # Minimo de error aceptado
             i = 0  # Contador de la iteracion
->>>>>>> 5e798acc32fb6dc7a5d2b7d7b90742f322628fa7
             xi_1 = x0
 
             valores = []

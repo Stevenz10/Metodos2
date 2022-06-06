@@ -1,3 +1,4 @@
+from wsgiref.validate import validator
 import numpy as np
 import matplotlib.pyplot as plt
 from sympy import sympify, Symbol
@@ -8,7 +9,7 @@ def calcular(ecuacion,valor):
       return ecuacion.subs(x,valor).evalf()
   
 def graficar(ecuacion):
-      valoresX = np.linspace(-5,5)
+      valoresX = np.linspace(-10,10)
       valoresY = []
       for valor in valoresX:
             valoresY.append(calcular(ecuacion,valor))
@@ -22,27 +23,7 @@ def graficar(ecuacion):
       plt.plot(valoresX,valoresY)
       plt.show()
       return None
-
-# Implementing Regula Falsi Method
-def Regula_Falsi(Xa,Xb,e):
-    step = 1
-    print('\n\n*** IMPLEMENTACIÓN DEL MÉTODO DE REGULA-FALSI ***')
-    condition = True
-    while condition:
-        Xr = Xa- (Xb-Xa) * calcular(Xa)/( calcular(Xb) - calcular(Xa) )
-        print('Iteración%d, Xr = %0.6f y f(Xr) = %0.6f' % (step, Xr, calcular(Xr)))
-
-        if calcular(Xa) * calcular(Xr) < 0:
-            Xb = Xr
-        else:
-            Xa = Xr
-
-        step = step + 1
-        condition = abs(calcular(Xr)) > e
-
-    print('\nLa raíz requerida es: %0.8f' % Xr)
-
-
+  
 # Sección de Entrada
 x = Symbol('x')
 print("Ejemplo: -0.5*x**2+2.5*x+4.5")
@@ -57,9 +38,31 @@ Xa = float(Xa)
 Xb = float(Xb)
 e = float(e)
 
+valores = []
+
+# Implementando Regula Falsi Method
+def Regula_Falsi(Xa,Xb,e):
+    step = 1
+    print('\n\n*** IMPLEMENTACIÓN DEL MÉTODO DE REGULA-FALSI ***')
+    condition = True
+    while condition:
+        Xr = Xa- (Xb-Xa) * calcular(Xa)/( calcular(Xb) - calcular(Xa) )
+        valores.append(Xr,Xa, Xb)
+        print('Iteración%d, Xr = %0.6f y f(Xr) = %0.6f' % (step, Xr, calcular(Xr)))
+
+        if calcular(Xa) * calcular(Xr) < 0:
+            Xb = Xr
+        else:
+            Xa = Xr
+
+        step = step + 1
+        condition = abs(calcular(Xr)) > e
+
+    print('\nLa raíz requerida es: %0.8f' % Xr)
+
 #Revisando que los valores cumplan la teoria de Regula Falsi
-if calcular(Xa) * calcular(Xb) > 0.0:
-    print('Los valores ingresados no cumplen con las reglas de Regula Falsi.')
-    print('Porfavor, vuelva a intentarlo de nuevo.')
-else:
-    Regula_Falsi(Xa,Xb,e)
+    if calcular(Xa) * calcular(Xb) > 0.0:
+            print('Los valores ingresados no cumplen con las reglas de Regula Falsi.')
+            print('Porfavor, vuelva a intentarlo de nuevo.')
+    else:
+            Regula_Falsi(Xa,Xb,e)

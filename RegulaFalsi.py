@@ -33,7 +33,7 @@ def Regula_Falsi(Xa,Xb,e,ecuacion):
         Xr = Xa- (Xb-Xa) * calcular(ecuacion,Xa)/( calcular(ecuacion,Xb) - calcular(ecuacion,Xa) )
         valores.append([Xr,Xa,Xb])
         if step>=1:
-            print('Iteración%d, Xr = %0.6f y error = %0.6f' % (step, Xr, abs(((valores[step][0]-valores[step-1][0])/valores[step][0])*100)) + "%")
+            print('Iteración %d, Xr = %0.6f y error = %0.6f' % (step, Xr, abs(((valores[step][0]-valores[step-1][0])/valores[step][0])*100)) + "%")
         else:
             print('Iteración%d, Xr = %0.6f' % (step, Xr))
         if calcular(ecuacion,Xa) * calcular(ecuacion,Xr) < 0:

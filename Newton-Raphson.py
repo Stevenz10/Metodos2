@@ -37,11 +37,11 @@ while opcion == 'S':
             print("Ejemplo: x**3-2*x-5")
             ecuacion = parse_expr(input("Introduzca la ecuacion:\n"))
             graficar(ecuacion)
-            x0 = int(input("Introduzca el punto inicial:\n"))  # Valor del punto inicial
+            x0 = float(input("Introduzca el punto inicial:\n"))  # Valor del punto inicial
+            tol = float(input('Introduzca el minímo error tolerable: '))
             derivada = ecuacion.diff(x)
             # Inicio del Algoritmo Newton Raphson
             max_iter = 30  # Iteracion maxima
-            tol = 1  # Minimo de error aceptado
             i = 0  # Contador de la iteracion
             xi_1 = x0
 
@@ -60,7 +60,7 @@ while opcion == 'S':
                         print('Iteration ' + str(i) + ': x = ' + str(valor[0]))
                   else:
                         print('Iteration ' + str(i) + ': x = ' + str(valor[0]) + ', error = ' +  str(abs(((valores[i][0]-valores[i-1][0])/valores[i][0])*100))+"%")
-                  if i>30:
+                  if i>max_iter:
                         print('Hemos llegado a la iteracion maxima tolerada ' + str(i))
             opcion = input("Desea continuar S/N:  ").upper()
       except (SyntaxError,ValueError,TypeError):
